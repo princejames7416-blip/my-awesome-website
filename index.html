@@ -3,220 +3,653 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PrankCall Studio</title>
+    <title>PrankCall Studio - Premium Access</title>
     <meta
       name="description"
-      content="A safe, consent-based creative call studio with voice effects, prank overlays, and picture-to-video motion scenes."
+      content="A safe, consent-based creative call studio with premium features and secure payment processing."
     />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="auth.css" />
   </head>
   <body>
-    <header class="topbar">
-      <div class="container nav-wrap">
-        <div class="brand">
-          <span class="brand-mark">P</span>
-          <span>PrankCall Studio</span>
-        </div>
-        <nav class="nav">
-          <a href="#studio">Studio</a>
-          <a href="#effects">Effects</a>
-          <a href="#video-lab">Picture-to-Video</a>
-          <a href="#safety">Safety</a>
-        </nav>
-        <button class="primary-btn" id="launchCallButton">Launch call</button>
-      </div>
-    </header>
-
-    <main>
-      <section class="hero">
-        <div class="container hero-grid">
-          <div class="hero-copy">
-            <p class="eyebrow">Creative live-call tooling</p>
-            <h1>Make every call feel cinematic.</h1>
-            <p class="subheading">
-              Build playful, consent-based call experiences with live webcam overlays,
-              voice modulation controls, and animated picture-to-video scenes.
-            </p>
-            <div class="hero-actions">
-              <button class="primary-btn large" id="heroLaunch">Open studio</button>
-              <button class="secondary-btn large" id="demoMode">Try demo mode</button>
-            </div>
-            <ul class="mini-features">
-              <li>Live webcam effects</li>
-              <li>Pitch and reverb controls</li>
-              <li>Animated photo scenes</li>
-            </ul>
+    <!-- Authentication Modal -->
+    <div id="authModal" class="auth-modal active">
+      <div class="auth-container">
+        <div class="auth-card">
+          <div class="auth-header">
+            <span class="auth-brand-mark">P</span>
+            <h1>PrankCall Studio</h1>
+            <p>Premium Access Required</p>
           </div>
 
-          <div class="hero-card">
-            <div class="screen-badge">LIVE</div>
-            <div class="call-screen glitch" id="callScreen">
-              <video id="localVideo" autoplay muted playsinline></video>
-              <img
-                id="demoAvatar"
-                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80"
-                alt="Demo portrait"
+          <div class="auth-tabs">
+            <button class="auth-tab active" id="loginTab">Login</button>
+            <button class="auth-tab" id="signupTab">Sign Up</button>
+          </div>
+
+          <!-- Admin Login -->
+          <div id="adminLoginForm" class="auth-form" style="display: none;">
+            <div class="admin-badge">ADMIN ACCESS</div>
+            <div class="form-group">
+              <label for="adminEmail">Admin Email</label>
+              <input
+                id="adminEmail"
+                type="email"
+                placeholder="admin@prank.studio"
+                required
               />
-              <div class="call-overlay">
-                <span id="callLabel">Incoming call</span>
-                <strong id="callName">Mia</strong>
-              </div>
-              <div class="effect-ribbon" id="effectRibbon">Glitch mode</div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      <section id="studio" class="studio section">
-        <div class="container">
-          <div class="section-heading">
-            <p class="eyebrow">Call studio</p>
-            <h2>Design a funny, safe, immersive scene</h2>
+            <div class="form-group">
+              <label for="adminPassword">Admin Password</label>
+              <input
+                id="adminPassword"
+                type="password"
+                placeholder="Admin password"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="adminKey">Admin Secret Key</label>
+              <input
+                id="adminKey"
+                type="password"
+                placeholder="Admin secret key"
+                required
+              />
+            </div>
+
+            <button type="submit" class="primary-btn large" id="adminLoginBtn">Login as Admin</button>
+            <p class="auth-footer"><a href="#" onclick="switchTab('login')">Back to user login</a></p>
           </div>
 
-          <div class="studio-grid">
-            <div class="panel preview-panel">
-              <div class="panel-header">
-                <span>Live preview</span>
-                <span class="status-pill" id="cameraStatus">Camera off</span>
+          <!-- Login Form -->
+          <form id="loginForm" class="auth-form active">
+            <div class="login-options">
+              <p>Login as:</p>
+              <button type="button" class="role-selector active" data-role="user">User</button>
+              <button type="button" class="role-selector" data-role="admin">Admin</button>
+            </div>
+
+            <div class="form-group">
+              <label for="loginEmail">Email</label>
+              <input
+                id="loginEmail"
+                type="email"
+                placeholder="your@email.com"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="loginPassword">Password</label>
+              <input
+                id="loginPassword"
+                type="password"
+                placeholder="Your password"
+                required
+              />
+            </div>
+
+            <button type="submit" class="primary-btn large">Login</button>
+            <p class="auth-footer">Don't have an account? <a href="#" onclick="switchTab('signup')">Sign up</a></p>
+          </form>
+
+          <!-- Signup Form -->
+          <form id="signupForm" class="auth-form">
+            <div class="form-group">
+              <label for="signupName">Full Name</label>
+              <input
+                id="signupName"
+                type="text"
+                placeholder="Your name"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="signupEmail">Email</label>
+              <input
+                id="signupEmail"
+                type="email"
+                placeholder="your@email.com"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="signupPassword">Password</label>
+              <input
+                id="signupPassword"
+                type="password"
+                placeholder="Min. 8 characters"
+                minlength="8"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="signupConfirmPassword">Confirm Password</label>
+              <input
+                id="signupConfirmPassword"
+                type="password"
+                placeholder="Confirm password"
+                required
+              />
+            </div>
+
+            <div class="access-options">
+              <p class="access-label">Choose Your Plan:</p>
+              
+              <div class="plan-selector">
+                <!-- Free Trial Plan -->
+                <div class="plan-card">
+                  <input
+                    type="radio"
+                    id="planFree"
+                    name="accessPlan"
+                    value="free"
+                    checked
+                  />
+                  <label for="planFree" class="plan-label">
+                    <span class="plan-name">Free Trial</span>
+                    <span class="plan-price">$0</span>
+                    <span class="plan-duration">7 days</span>
+                    <small>Limited features</small>
+                  </label>
+                </div>
+
+                <!-- Premium Plan (One-Time) -->
+                <div class="plan-card premium">
+                  <input
+                    type="radio"
+                    id="planPremium"
+                    name="accessPlan"
+                    value="premium"
+                  />
+                  <label for="planPremium" class="plan-label">
+                    <span class="plan-name">Premium (One-Time)</span>
+                    <span class="plan-price">$299.99</span>
+                    <span class="plan-duration">Lifetime access</span>
+                    <small>Full features, no recurring charges</small>
+                  </label>
+                </div>
+
+                <!-- Pro Annual Plan -->
+                <div class="plan-card pro">
+                  <input
+                    type="radio"
+                    id="planProAnnual"
+                    name="accessPlan"
+                    value="pro-annual"
+                  />
+                  <label for="planProAnnual" class="plan-label">
+                    <span class="plan-name">Pro Annual</span>
+                    <span class="plan-price">$199.99</span>
+                    <span class="plan-duration">Per year</span>
+                    <small>All features + priority support</small>
+                  </label>
+                </div>
               </div>
 
-              <div class="call-stage" id="callStage">
-                <video id="stageVideo" autoplay muted playsinline></video>
-                <div class="call-overlay subtle">
-                  <span>Boosted audio</span>
-                  <strong>Call effect active</strong>
+              <!-- Promo Code Section (Only for Premium Plans) -->
+              <div id="promoCodeSection" class="promo-code-section" style="display: none;">
+                <p class="promo-label">Have a Premium Promo Code?</p>
+                <input
+                  id="signupPromo"
+                  type="text"
+                  placeholder="Enter promo code (saves $50-$100)"
+                />
+                <small>Promo codes are exclusive to those who've previously paid $200+</small>
+              </div>
+
+              <!-- Payment Method Selector -->
+              <div id="paymentMethodsWrapper" class="payment-methods" style="display: none;">
+                <p class="payment-label">Select Payment Method:</p>
+                <div class="payment-options">
+                  <button type="button" class="payment-btn" id="stripePayment">
+                    <span class="payment-icon">💳</span>
+                    Credit Card
+                  </button>
+                  <button type="button" class="payment-btn" id="paypalPayment">
+                    <span class="payment-icon">🅿️</span>
+                    PayPal
+                  </button>
+                  <button type="button" class="payment-btn" id="applePayment">
+                    <span class="payment-icon">🍎</span>
+                    Apple Pay
+                  </button>
                 </div>
               </div>
             </div>
 
-            <div class="panel controls-panel" id="effects">
-              <div class="panel-header">
-                <span>Live effect controls</span>
-              </div>
+            <button type="submit" class="primary-btn large">Create Account</button>
+            <p class="auth-footer">Already have an account? <a href="#" onclick="switchTab('login')">Login</a></p>
+          </form>
 
-              <div class="control-block">
-                <label for="effectPreset">Scene preset</label>
-                <select id="effectPreset">
-                  <option value="glitch">Glitch</option>
-                  <option value="ghost">Ghost</option>
-                  <option value="cartoon">Cartoon</option>
-                  <option value="horror">Horror</option>
-                  <option value="disco">Disco</option>
-                </select>
-              </div>
-
-              <div class="control-block">
-                <label for="voicePreset">Voice mode</label>
-                <select id="voicePreset">
-                  <option value="clean">Clean</option>
-                  <option value="robot">Robot</option>
-                  <option value="deep">Deep</option>
-                  <option value="chipmunk">Chipmunk</option>
-                  <option value="drone">Drone</option>
-                </select>
-              </div>
-
-              <div class="sliders">
-                <label>
-                  <span>Pitch</span>
-                  <input id="pitchSlider" type="range" min="0" max="100" value="54" />
-                </label>
-
-                <label>
-                  <span>Reverb</span>
-                  <input id="reverbSlider" type="range" min="0" max="100" value="42" />
-                </label>
-
-                <label>
-                  <span>Intensity</span>
-                  <input id="intensitySlider" type="range" min="0" max="100" value="68" />
-                </label>
-              </div>
-
-              <div class="button-row">
-                <button class="primary-btn" id="applyEffects">Apply effects</button>
-                <button class="secondary-btn" id="randomizeBtn">Randomize</button>
-              </div>
+          <!-- Payment Form (Hidden by default) -->
+          <form id="paymentForm" class="auth-form">
+            <div class="payment-header">
+              <h2>Complete Your Payment</h2>
+              <p id="paymentPlanText">Premium Access: $299.99 (One-Time)</p>
             </div>
-          </div>
-        </div>
-      </section>
 
-      <section id="video-lab" class="video-lab section alt-bg">
-        <div class="container">
-          <div class="section-heading">
-            <p class="eyebrow">Picture to video</p>
-            <h2>Turn a static photo into a moving story</h2>
-          </div>
+            <div class="form-group">
+              <label for="cardholderName">Cardholder Name</label>
+              <input
+                id="cardholderName"
+                type="text"
+                placeholder="John Doe"
+                required
+              />
+            </div>
 
-          <div class="video-grid">
-            <div class="panel photo-panel">
-              <label class="upload-box" for="photoUpload">
-                <input id="photoUpload" type="file" accept="image/*" />
-                <span>Upload a photo</span>
-              </label>
-              <div class="photo-preview-wrapper">
-                <img id="photoPreview" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80" alt="Scene preview" />
+            <div class="form-group">
+              <label for="cardEmail">Email</label>
+              <input
+                id="cardEmail"
+                type="email"
+                placeholder="your@email.com"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="cardNumber">Card Number</label>
+              <input
+                id="cardNumber"
+                type="text"
+                placeholder="1234 5678 9012 3456"
+                maxlength="19"
+                required
+              />
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="cardExpiry">Expiry Date</label>
+                <input
+                  id="cardExpiry"
+                  type="text"
+                  placeholder="MM/YY"
+                  maxlength="5"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="cardCVC">CVC</label>
+                <input
+                  id="cardCVC"
+                  type="text"
+                  placeholder="123"
+                  maxlength="4"
+                  required
+                />
               </div>
             </div>
 
-            <div class="panel animation-panel">
-              <div class="control-block">
-                <label for="motionPreset">Motion style</label>
-                <select id="motionPreset">
-                  <option value="pan">Pan & zoom</option>
-                  <option value="float">Float</option>
-                  <option value="pulse">Pulse reveal</option>
-                  <option value="shear">Tilt and flicker</option>
-                </select>
-              </div>
+            <div class="form-group">
+              <label for="billingAddress">Billing Address</label>
+              <input
+                id="billingAddress"
+                type="text"
+                placeholder="123 Main St"
+                required
+              />
+            </div>
 
-              <div class="control-block">
-                <label for="captionText">Caption</label>
-                <input id="captionText" type="text" maxlength="28" value="Oops! You picked up the wrong call" />
-              </div>
+            <div class="form-group">
+              <label for="billingCity">City</label>
+              <input
+                id="billingCity"
+                type="text"
+                placeholder="New York"
+                required
+              />
+            </div>
 
-              <div class="button-row centered">
-                <button class="primary-btn" id="generateVideo">Generate scene</button>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="billingState">State</label>
+                <input
+                  id="billingState"
+                  type="text"
+                  placeholder="NY"
+                  maxlength="2"
+                  required
+                />
               </div>
-
-              <div class="generated-scene" id="generatedScene">
-                <div class="scene-content">
-                  <img id="animatedPhoto" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80" alt="Animated scene" />
-                  <span id="sceneCaption">Oops! You picked up the wrong call</span>
-                </div>
+              <div class="form-group">
+                <label for="billingZip">ZIP Code</label>
+                <input
+                  id="billingZip"
+                  type="text"
+                  placeholder="10001"
+                  required
+                />
               </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      <section id="safety" class="safety section">
-        <div class="container safety-box">
-          <div>
-            <p class="eyebrow">Safety first</p>
-            <h2>Built for playful storytelling, not deceptive impersonation.</h2>
-          </div>
-          <p>
-            This prototype is designed for consent-based creative effects, lighthearted entertainment,
-            and visual storytelling. Use it responsibly, with permission, and keep it transparent.
-          </p>
-        </div>
-      </section>
-    </main>
+            <div class="security-note">
+              <span class="lock-icon">🔒</span>
+              <span>Your payment information is secure and encrypted</span>
+            </div>
 
-    <footer class="footer">
-      <div class="container footer-wrap">
-        <span>© 2026 PrankCall Studio</span>
-        <div class="footer-links">
-          <a href="#studio">Studio</a>
-          <a href="#effects">Effects</a>
-          <a href="#video-lab">Video Lab</a>
+            <button type="submit" class="primary-btn large">Process Payment</button>
+            <button type="button" class="secondary-btn large" onclick="switchToAuthForm()">Back</button>
+          </form>
+        </div>
+
+        <div class="auth-info">
+          <div class="info-card">
+            <span class="info-icon">🎬</span>
+            <h3>Professional Prank Studio</h3>
+            <p>Create hilarious pranks with advanced effects and live streaming</p>
+          </div>
+          <div class="info-card">
+            <span class="info-icon">🔒</span>
+            <h3>Secure & Safe</h3>
+            <p>Fully encrypted, consent-based prank experiences</p>
+          </div>
+          <div class="info-card">
+            <span class="info-icon">✨</span>
+            <h3>Premium Features</h3>
+            <p>Unlimited effects, no watermarks, priority support</p>
+          </div>
         </div>
       </div>
-    </footer>
+    </div>
 
+    <!-- Main Application (Hidden until authenticated) -->
+    <div id="mainApp" class="main-app" style="display: none;">
+      <header class="topbar">
+        <div class="container nav-wrap">
+          <div class="brand">
+            <span class="brand-mark">P</span>
+            <span>PrankCall Studio</span>
+          </div>
+          <nav class="nav">
+            <a href="#studio">Studio</a>
+            <a href="#livestream">Live Stream</a>
+            <a href="#effects">Effects</a>
+            <a href="#video-lab">Picture-to-Video</a>
+            <a href="#safety">Safety</a>
+          </nav>
+          <div class="nav-right">
+            <span id="userBadge" class="user-badge">FREE TRIAL</span>
+            <button class="account-btn" id="accountBtn">
+              <span id="userEmail">User</span>
+              <span class="dropdown-arrow">▼</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div class="container hero-grid">
+            <div class="hero-copy">
+              <p class="eyebrow">Creative live-call tooling</p>
+              <h1>Make every call & stream feel cinematic.</h1>
+              <p class="subheading">
+                Build playful, consent-based call experiences with live webcam overlays,
+                voice modulation controls, and animated picture-to-video scenes.
+              </p>
+              <div class="hero-actions">
+                <button class="primary-btn large" id="heroLaunch">Open studio</button>
+                <button class="secondary-btn large" id="demoMode">Try demo mode</button>
+              </div>
+            </div>
+
+            <div class="hero-card">
+              <div class="screen-badge">LIVE</div>
+              <div class="call-screen glitch" id="callScreen">
+                <video id="localVideo" autoplay muted playsinline></video>
+                <div class="call-overlay">
+                  <span id="callLabel">Incoming call</span>
+                  <strong id="callName">Studio</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="studio" class="studio section">
+          <div class="container">
+            <div class="section-heading">
+              <p class="eyebrow">Call studio</p>
+              <h2>Design your prank scene</h2>
+            </div>
+
+            <div class="studio-grid">
+              <div class="panel preview-panel">
+                <div class="panel-header">
+                  <span>Live preview</span>
+                  <span class="status-pill" id="cameraStatus">Camera off</span>
+                </div>
+                <div class="call-stage" id="callStage">
+                  <video id="stageVideo" autoplay muted playsinline></video>
+                </div>
+              </div>
+
+              <div class="panel controls-panel" id="effects">
+                <div class="panel-header">
+                  <span>Live effect controls</span>
+                </div>
+
+                <div class="control-block">
+                  <label for="effectPreset">Scene preset</label>
+                  <select id="effectPreset">
+                    <option value="glitch">Glitch</option>
+                    <option value="ghost">Ghost</option>
+                    <option value="cartoon">Cartoon</option>
+                    <option value="horror">Horror</option>
+                    <option value="disco">Disco</option>
+                  </select>
+                </div>
+
+                <div class="sliders">
+                  <label>
+                    <span>Pitch</span>
+                    <input id="pitchSlider" type="range" min="0" max="100" value="54" />
+                  </label>
+                  <label>
+                    <span>Reverb</span>
+                    <input id="reverbSlider" type="range" min="0" max="100" value="42" />
+                  </label>
+                </div>
+
+                <div class="button-row">
+                  <button class="primary-btn" id="applyEffects">Apply effects</button>
+                  <button class="secondary-btn" id="randomizeBtn">Randomize</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="safety" class="safety section">
+          <div class="container safety-box">
+            <div>
+              <p class="eyebrow">Safety first</p>
+              <h2>Built for playful storytelling, not deceptive impersonation.</h2>
+            </div>
+            <p>Use this app responsibly, with permission, and keep it transparent.</p>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div class="container footer-wrap">
+          <span>© 2026 PrankCall Studio</span>
+          <div class="footer-links">
+            <a href="#studio">Studio</a>
+            <a href="#effects">Effects</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Account Dropdown Menu -->
+    <div id="accountDropdown" class="account-dropdown" style="display: none;">
+      <div class="dropdown-item account-info">
+        <span class="info-label">Logged in as:</span>
+        <strong id="dropdownEmail">user@example.com</strong>
+      </div>
+      <div class="dropdown-divider"></div>
+      <a href="#" id="profileLink" class="dropdown-item">👤 Profile</a>
+      <a href="#" id="billingLink" class="dropdown-item">💳 Billing & Payments</a>
+      <a href="#" id="adminLink" class="dropdown-item admin-only" style="display: none;">⚙️ Admin Panel</a>
+      <div class="dropdown-divider"></div>
+      <button id="logoutBtn" class="dropdown-item logout">🚪 Logout</button>
+    </div>
+
+    <!-- Admin Dashboard (Hidden, only for admin) -->
+    <div id="adminDashboard" class="admin-dashboard" style="display: none;">
+      <div class="admin-header">
+        <h2>💰 Admin Control Panel</h2>
+        <button id="closeAdminBtn" class="close-btn">✕</button>
+      </div>
+
+      <div class="admin-tabs">
+        <button class="admin-tab active" data-tab="dashboard">Dashboard</button>
+        <button class="admin-tab" data-tab="transactions">Transactions</button>
+        <button class="admin-tab" data-tab="promocodes">Promo Codes</button>
+        <button class="admin-tab" data-tab="withdraw">Withdraw Funds</button>
+      </div>
+
+      <!-- Dashboard Tab -->
+      <div id="dashboardTab" class="admin-tab-content active">
+        <div class="admin-stats">
+          <div class="stat-card">
+            <span class="stat-label">Total Revenue</span>
+            <strong class="stat-value" id="totalRevenue">$0.00</strong>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Active Premium Users</span>
+            <strong class="stat-value" id="activePremiumUsers">0</strong>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Free Trial Users</span>
+            <strong class="stat-value" id="freeTrialUsers">0</strong>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Available to Withdraw</span>
+            <strong class="stat-value" id="availableBalance">$0.00</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transactions Tab -->
+      <div id="transactionsTab" class="admin-tab-content">
+        <h3>All Transactions</h3>
+        <table class="transactions-table">
+          <thead>
+            <tr>
+              <th>User Email</th>
+              <th>Plan</th>
+              <th>Amount</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="transactionsBody">
+            <tr>
+              <td colspan="5" class="no-data">No transactions yet</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Promo Codes Tab -->
+      <div id="promoCodesTab" class="admin-tab-content">
+        <div class="promo-management">
+          <h3>Generate Promo Codes</h3>
+          <p class="promo-info">✨ Promo codes grant access to premium plans ($200+) at discounted rates</p>
+          
+          <div class="promo-form">
+            <div class="form-group">
+              <label for="promoCount">Number of Codes</label>
+              <input id="promoCount" type="number" min="1" max="100" value="1" />
+            </div>
+            <div class="form-group">
+              <label for="promoDiscount">Discount Percentage</label>
+              <input id="promoDiscount" type="number" min="5" max="50" value="15" />
+            </div>
+            <button class="primary-btn" id="generatePromoBtn">Generate Codes</button>
+          </div>
+
+          <h3>Active Promo Codes</h3>
+          <table class="promo-table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Discount</th>
+                <th>Used By</th>
+                <th>Created</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="promoBody">
+              <tr>
+                <td colspan="5" class="no-data">No promo codes yet</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Withdraw Tab -->
+      <div id="withdrawTab" class="admin-tab-content">
+        <div class="withdraw-section">
+          <h3>Withdraw Funds</h3>
+          <div class="balance-card">
+            <p class="balance-label">Available Balance</p>
+            <p class="balance-amount" id="withdrawBalance">$0.00</p>
+          </div>
+
+          <div class="withdraw-form">
+            <div class="form-group">
+              <label for="withdrawAmount">Amount to Withdraw (Min: $50)</label>
+              <input id="withdrawAmount" type="number" placeholder="Enter amount" min="50" />
+            </div>
+            <div class="form-group">
+              <label for="withdrawMethod">Withdrawal Method</label>
+              <select id="withdrawMethod">
+                <option value="bank">Bank Transfer</option>
+                <option value="paypal">PayPal</option>
+                <option value="stripe">Stripe Payout</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="withdrawDetails">Withdrawal Details</label>
+              <input id="withdrawDetails" type="text" placeholder="Bank account/PayPal email, etc." />
+            </div>
+            <button class="primary-btn" id="withdrawBtn">Request Withdrawal</button>
+          </div>
+
+          <h3>Withdrawal History</h3>
+          <table class="withdraw-table">
+            <thead>
+              <tr>
+                <th>Amount</th>
+                <th>Method</th>
+                <th>Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="withdrawalBody">
+              <tr>
+                <td colspan="4" class="no-data">No withdrawals yet</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script src="auth.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
