@@ -1,174 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Awesome Website</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">MyWebsite</div>
-            <ul class="nav-menu">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#features" class="nav-link">Features</a></li>
-                <li><a href="#gallery" class="nav-link">Gallery</a></li>
-                <li><a href="#services" class="nav-link">Services</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PrankCall Studio</title>
+    <meta
+      name="description"
+      content="A safe, consent-based creative call studio with voice effects, prank overlays, and picture-to-video motion scenes."
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav-wrap">
+        <div class="brand">
+          <span class="brand-mark">P</span>
+          <span>PrankCall Studio</span>
+        </div>
+        <nav class="nav">
+          <a href="#studio">Studio</a>
+          <a href="#effects">Effects</a>
+          <a href="#video-lab">Picture-to-Video</a>
+          <a href="#safety">Safety</a>
+        </nav>
+        <button class="primary-btn" id="launchCallButton">Launch call</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Creative live-call tooling</p>
+            <h1>Make every call feel cinematic.</h1>
+            <p class="subheading">
+              Build playful, consent-based call experiences with live webcam overlays,
+              voice modulation controls, and animated picture-to-video scenes.
+            </p>
+            <div class="hero-actions">
+              <button class="primary-btn large" id="heroLaunch">Open studio</button>
+              <button class="secondary-btn large" id="demoMode">Try demo mode</button>
+            </div>
+            <ul class="mini-features">
+              <li>Live webcam effects</li>
+              <li>Pitch and reverb controls</li>
+              <li>Animated photo scenes</li>
             </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+          </div>
+
+          <div class="hero-card">
+            <div class="screen-badge">LIVE</div>
+            <div class="call-screen glitch" id="callScreen">
+              <video id="localVideo" autoplay muted playsinline></video>
+              <img
+                id="demoAvatar"
+                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80"
+                alt="Demo portrait"
+              />
+              <div class="call-overlay">
+                <span id="callLabel">Incoming call</span>
+                <strong id="callName">Mia</strong>
+              </div>
+              <div class="effect-ribbon" id="effectRibbon">Glitch mode</div>
             </div>
+          </div>
         </div>
-    </nav>
+      </section>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1>Welcome to My Awesome Website</h1>
-            <p>Discover amazing features and beautiful designs</p>
-            <button class="cta-button">Get Started</button>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="features">
+      <section id="studio" class="studio section">
         <div class="container">
-            <h2>Our Features</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🚀</div>
-                    <h3>Fast Performance</h3>
-                    <p>Lightning-fast loading times and smooth interactions for the best user experience.</p>
+          <div class="section-heading">
+            <p class="eyebrow">Call studio</p>
+            <h2>Design a funny, safe, immersive scene</h2>
+          </div>
+
+          <div class="studio-grid">
+            <div class="panel preview-panel">
+              <div class="panel-header">
+                <span>Live preview</span>
+                <span class="status-pill" id="cameraStatus">Camera off</span>
+              </div>
+
+              <div class="call-stage" id="callStage">
+                <video id="stageVideo" autoplay muted playsinline></video>
+                <div class="call-overlay subtle">
+                  <span>Boosted audio</span>
+                  <strong>Call effect active</strong>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <h3>Responsive Design</h3>
-                    <p>Works perfectly on all devices - desktop, tablet, and mobile phones.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎨</div>
-                    <h3>Beautiful UI</h3>
-                    <p>Modern and elegant design that captures your brand's essence.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <h3>Secure</h3>
-                    <p>Built with security best practices to protect your data.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>SEO Optimized</h3>
-                    <p>Search engine friendly with all the best practices implemented.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🌐</div>
-                    <h3>Global Reach</h3>
-                    <p>Connect with users from around the world with ease.</p>
-                </div>
+              </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Gallery Section -->
-    <section id="gallery" class="gallery">
-        <div class="container">
-            <h2>Image Gallery</h2>
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=300&fit=crop" alt="Gallery Image 1">
-                    <div class="gallery-overlay">
-                        <p>Amazing Photo 1</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1488190211105-8342881b0b27?w=400&h=300&fit=crop" alt="Gallery Image 2">
-                    <div class="gallery-overlay">
-                        <p>Amazing Photo 2</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=300&fit=crop" alt="Gallery Image 3">
-                    <div class="gallery-overlay">
-                        <p>Amazing Photo 3</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop" alt="Gallery Image 4">
-                    <div class="gallery-overlay">
-                        <p>Amazing Photo 4</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&h=300&fit=crop" alt="Gallery Image 5">
-                    <div class="gallery-overlay">
-                        <p>Amazing Photo 5</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop" alt="Gallery Image 6">
-                    <div class="gallery-overlay">
-                        <p>Amazing Photo 6</p>
-                    </div>
-                </div>
+            <div class="panel controls-panel" id="effects">
+              <div class="panel-header">
+                <span>Live effect controls</span>
+              </div>
+
+              <div class="control-block">
+                <label for="effectPreset">Scene preset</label>
+                <select id="effectPreset">
+                  <option value="glitch">Glitch</option>
+                  <option value="ghost">Ghost</option>
+                  <option value="cartoon">Cartoon</option>
+                  <option value="horror">Horror</option>
+                  <option value="disco">Disco</option>
+                </select>
+              </div>
+
+              <div class="control-block">
+                <label for="voicePreset">Voice mode</label>
+                <select id="voicePreset">
+                  <option value="clean">Clean</option>
+                  <option value="robot">Robot</option>
+                  <option value="deep">Deep</option>
+                  <option value="chipmunk">Chipmunk</option>
+                  <option value="drone">Drone</option>
+                </select>
+              </div>
+
+              <div class="sliders">
+                <label>
+                  <span>Pitch</span>
+                  <input id="pitchSlider" type="range" min="0" max="100" value="54" />
+                </label>
+
+                <label>
+                  <span>Reverb</span>
+                  <input id="reverbSlider" type="range" min="0" max="100" value="42" />
+                </label>
+
+                <label>
+                  <span>Intensity</span>
+                  <input id="intensitySlider" type="range" min="0" max="100" value="68" />
+                </label>
+              </div>
+
+              <div class="button-row">
+                <button class="primary-btn" id="applyEffects">Apply effects</button>
+                <button class="secondary-btn" id="randomizeBtn">Randomize</button>
+              </div>
             </div>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Services Section -->
-    <section id="services" class="services">
+      <section id="video-lab" class="video-lab section alt-bg">
         <div class="container">
-            <h2>Our Services</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>Web Design</h3>
-                    <p>Custom web design tailored to your brand identity and business goals.</p>
-                    <a href="#">Learn More</a>
-                </div>
-                <div class="service-card">
-                    <h3>Development</h3>
-                    <p>Full-stack development with the latest technologies and best practices.</p>
-                    <a href="#">Learn More</a>
-                </div>
-                <div class="service-card">
-                    <h3>Maintenance</h3>
-                    <p>Ongoing support and maintenance to keep your website running smoothly.</p>
-                    <a href="#">Learn More</a>
-                </div>
+          <div class="section-heading">
+            <p class="eyebrow">Picture to video</p>
+            <h2>Turn a static photo into a moving story</h2>
+          </div>
+
+          <div class="video-grid">
+            <div class="panel photo-panel">
+              <label class="upload-box" for="photoUpload">
+                <input id="photoUpload" type="file" accept="image/*" />
+                <span>Upload a photo</span>
+              </label>
+              <div class="photo-preview-wrapper">
+                <img id="photoPreview" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80" alt="Scene preview" />
+              </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2>Get In Touch</h2>
-            <form class="contact-form">
-                <input type="text" placeholder="Your Name" required>
-                <input type="email" placeholder="Your Email" required>
-                <textarea placeholder="Your Message" rows="5" required></textarea>
-                <button type="submit" class="submit-btn">Send Message</button>
-            </form>
-        </div>
-    </section>
+            <div class="panel animation-panel">
+              <div class="control-block">
+                <label for="motionPreset">Motion style</label>
+                <select id="motionPreset">
+                  <option value="pan">Pan & zoom</option>
+                  <option value="float">Float</option>
+                  <option value="pulse">Pulse reveal</option>
+                  <option value="shear">Tilt and flicker</option>
+                </select>
+              </div>
 
-    <!-- Footer -->
+              <div class="control-block">
+                <label for="captionText">Caption</label>
+                <input id="captionText" type="text" maxlength="28" value="Oops! You picked up the wrong call" />
+              </div>
+
+              <div class="button-row centered">
+                <button class="primary-btn" id="generateVideo">Generate scene</button>
+              </div>
+
+              <div class="generated-scene" id="generatedScene">
+                <div class="scene-content">
+                  <img id="animatedPhoto" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80" alt="Animated scene" />
+                  <span id="sceneCaption">Oops! You picked up the wrong call</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="safety" class="safety section">
+        <div class="container safety-box">
+          <div>
+            <p class="eyebrow">Safety first</p>
+            <h2>Built for playful storytelling, not deceptive impersonation.</h2>
+          </div>
+          <p>
+            This prototype is designed for consent-based creative effects, lighthearted entertainment,
+            and visual storytelling. Use it responsibly, with permission, and keep it transparent.
+          </p>
+        </div>
+      </section>
+    </main>
+
     <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 My Awesome Website. All rights reserved.</p>
-            <div class="social-links">
-                <a href="#">Twitter</a>
-                <a href="#">Facebook</a>
-                <a href="#">Instagram</a>
-                <a href="#">LinkedIn</a>
-            </div>
+      <div class="container footer-wrap">
+        <span>© 2026 PrankCall Studio</span>
+        <div class="footer-links">
+          <a href="#studio">Studio</a>
+          <a href="#effects">Effects</a>
+          <a href="#video-lab">Video Lab</a>
         </div>
+      </div>
     </footer>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
